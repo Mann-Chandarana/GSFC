@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/donation.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="banner">
+        <h1>Donation</h1>
+    </div>
+    <br />
+    <fieldset>
+        <legend>Donation</legend>
+        <div class="colums">
+            <div class="item">
+                <label for="fname">First Name<span>*</span></label>
+                <input id="fname" type="text" name="fname" />
+            </div>
+            <div class="item">
+                <label for="lname"> Last Name<span>*</span></label>
+                <input id="lname" type="text" name="lname" />
+            </div>
+            <div class="item">
+                <label for="address">Email Address<span>*</span></label>
+                <input id="address" type="text" name="address" />
+            </div>
+            <div class="item">
+                <label for="phone">Phone Number</label>
+                <input id="phone" type="tel" name="phone" />
+            </div>
+            <div class="item">
+                <label for="saddress">Street Address</label>
+                <input id="saddress" type="text" name="city" />
+            </div>
+            <div class="item">
+                <label for="city">City</label>
+                <input id="city" type="text" name="city" />
+            </div>
+            <div class="item">
+                <label for="zip">Zip/Postal Code</label>
+                <input id="zip" type="text" name="zip" />
+            </div>
+            <div class="item">
+                <label for="country">Country</label>
+                <input id="country" type="text" name="text" />
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <fieldset>
+        <legend>Donation Details</legend>
+        <div class="colums">
+        </div>
+        <div class="checkbox">
+            <p>May we thank you publicly?</p>
+            <label><input type="checkbox" />No, please keep my information anonymous
+            </label>
+        </div>
+        <div class="item">
+            <label for="amount">Donation Amount<span>*</span></label>
+            <input id="order-amt" type="number" name="amount" />
+        </div>
+        <div class="item">
+            <label for="donation">Donation Comments</label>
+            <textarea id="donation" rows="3"></textarea>
+        </div>
+    </fieldset>
+    <div class="btn-block">
+        <button id="order-button1" type="order" href="/">Confirm Order</button>
+    </div>
+    </form>
+    </div>
+
+
+    <!--==================================== Get order id from razorpay ==============================-->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        function func2(order_id, order_pay_id, order_sig) {
+            ////////////// Part -3)
+            var url = '/api/payment/verify';
+            var params = {
+                razorpay_order_id: order_id,
+                razorpay_payment_id: order_pay_id,
+                razorpay_signature: order_sig
+            };
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function (res) {
+                if (xmlHttp.readyState === 4) {
+                    alert(xmlHttp.responseText);
+
+                }
+            }
+            xmlHttp.open("POST", url, true); // false for synchronous request
+            xmlHttp.setRequestHeader("Content-type", "application/json");
+            xmlHttp.send(JSON.stringify(params));
+        }
+
+
+        function func1(orderId) {
+            ///////////////////////////////////////////  Part -2)
+            var options = {
+                "key": "<%= key %>",
+                "currency": "INR",
+                "name": "WTH Coding",
+                "description": "WtH Coding Transaction",
+                "order_id": orderId,
+                "handler": function (response) {
+                    var order_pay_id = response.razorpay_payment_id;
+                    var order_id = response.razorpay_order_id;
+                    var order_sig = response.razorpay_signature;
+                },
+                "theme": {
+                    "color": "#0EB9F2"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            alert("Hello");
+            e.preventDefault();
+            func2(order_id, order_pay_id, order_sig);
+
+        }
+
+        ///////////////////////////////////////////  Part -1)
+        document.getElementById("order-button1").onclick = function (e) {
+            let orderId = "";
+            var url = "/api/payment/order"
+            var params = {
+                amount: ((document.getElementById("order-amt").value) * 100),
+                currency: "INR",
+                receipt: "wthcoding001",
+                payment_capture: '1'
+            };
+            const val = document.getElementById("order-amt").value;
+
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function (res) {
+                if (xmlHttp.readyState === 4) {
+                    res = JSON.parse(xmlHttp.responseText);
+                    orderId = res.sub.id
+                    func1(orderId);
+                }
+            }
+            xmlHttp.open("POST", url, true);
+            xmlHttp.setRequestHeader("Content-type", "application/json");
+            xmlHttp.send(JSON.stringify(params));
+
+
+
+        }
+    </script>
+
+
+</body>
+
+</html>

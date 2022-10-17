@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/Loader.css" />
+    <title></title>
+</head>
+
+<body>
+    <form action="/file" method="get">
+        <button type="submit">Upload pdf</button>
+    </form>
+    <% files.forEach(function(file){%>
+        <embed src="pdf/<%=file.filename%>" width="800" height="500" alt="">
+        <form method="post" action="/delete/<%= file._id %>">
+            <% if(islogin){ %>
+            <button type="submit">Delete</button>
+           <% } %>
+
+        </form>
+        <%});%>
+
+            <div id="loader-wrapper">
+                <div id="loader"></div>
+
+                <div class="loader-section section-left"></div>
+                <div class="loader-section section-right"></div>
+
+            </div>
+            <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+
+</body>
+<script>
+    $(window).load(function () {
+        // Remove preloader
+        // https://ihatetomatoes.net/create-custom-preloading-screen/
+        $('body').addClass('loaded');
+    });
+</script>
+
+</html>
