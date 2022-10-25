@@ -97,8 +97,8 @@ $(document).ready(function () {
     });
   });
 
-  //navigation script
-  $('.Navigation ul li a').click(function () {
+  // navigation script
+  $('.mann-1').click(function () {
     $('.menumobile').removeAttr("style");
     $('#mobile_sec .mobile').removeClass("closed");
   });

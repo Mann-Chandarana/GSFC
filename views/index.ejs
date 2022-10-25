@@ -56,48 +56,50 @@
                             <nav class="Navigation">
                                 <ul>
                                     <li class="active">
-                                        <a href="#home">Home</a>
+                                        <a class="mann-1" href="#home">Home</a>
                                         <span class="menu-item-bg"></span>
                                     </li>
                                     <li>
-                                        <a href="#about">About</a>
+                                        <a class="mann-1" href="#about">About</a>
                                         <span class="menu-item-bg"></span>
                                     </li>
                                     <li>
-                                        <a href="#services">Gallery</a>
+                                        <a class="mann-1" href="#services">Gallery</a>
                                         <span class="menu-item-bg"></span>
                                     </li>
                                     <li>
-                                        <a href="#pricing">Donate</a>
+                                        <a class="mann-1" href="#pricing">Donate</a>
                                         <span class="menu-item-bg"></span>
                                     </li>
                                     <li>
-                                        <a href="#contact">Contact us</a>
+                                        <a class="mann-1" href="#contact">Contact us</a>
                                         <span class="menu-item-bg"></span>
                                     </li>
                                     <li>
-                                        <a href="/pdfFiles">Circular</a>
+                                        <a class="mann-1" href="/pdfFiles">Circular</a>
                                         <span class="menu-item-bg"></span>
                                     </li>
                                     <li>
+                                        <!-- <h1>Hello</h1> -->
                                         <a href="javascript:void(0)" class="dropbtn" onclick="myFunction()">Annual
                                             <i class="fa fa-caret-down"></i>
                                         </a>
-                                        <div class="dropdown-content" id="myDropdown">
-                                            <a href="uploads/DAA_Syallbus.pdf">Link 1</a>
-                                            <a href="uploads/OS_Syallbus.pdf">Link 2</a>
-                                            <a href="uploads/SE_Syallbus.pdf">Link 3</a>
-                                        </div>
                                         <span class="menu-item-bg"></span>
                                     </li>
+                                    <div class="dropdown-content" id="myDropdown">
+                                        <li><a href="uploads/DAA_Syallbus.pdf">Link 1</a></li>
+                                        <li><a href="uploads/OS_Syallbus.pdf">Link 2</a></li>
+                                        <li><a href="uploads/SE_Syallbus.pdf">Link 3</a></li>
+                                    </div>
+
                                     <% if(islogin){%>
                                         <li style="margin-right: 18px;">
-                                            <a href="/file">Login</a>
+                                            <a class="mann-1" href="/file">Login</a>
                                             <span class="menu-item-bg"></span>
                                         </li>
                                         <% }else{ %>
                                             <li style="margin-right: 18px;">
-                                                <a href="/logout">Logout</a>
+                                                <a class="mann-1" href="/logout">Logout</a>
                                                 <span class="menu-item-bg"></span>
                                             </li>
                                             <% }%>
