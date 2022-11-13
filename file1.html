@@ -6,106 +6,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload file</title>
-    
+
     <link rel="stylesheet" href="css/Loader.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
-        }
-
         body {
-            display: flex;
-            align-items: center;
+            font-family: sans-serif;
+            height: 100vh;
+            display: grid;
             justify-content: center;
-            min-height: 100vh;
-            background: #0d98ba;
-            /* background: #5256ad; */
+            align-items: center;
+            font-size: 1.2rem;
+            background-color: #060b23;
         }
 
-        .drag-area {
-            border: 2px dashed #fff;
+
+        .form {
+            position: relative;
+            width: 20rem;
+            height: 3rem;
+            top: 12rem;
+            right: 5px;
+        }
+
+        .inputee {
+            position: absolute;
+            z-index: -1;
+            border: 2px solid #e1e5ee;
+            border-radius: 0.5rem;
+            top: 0;
+            left: 15px;
+            width: 93%;
+            height: 100%;
+            color: white;
+            background-color: #060b23;
+            padding-left: 2.5rem;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        .inputee:focus {
+            border-color: #18ffff;
+        }
+
+        .formee {
             height: 500px;
             width: 700px;
-            border-radius: 5px;
+            border: 3px dotted white;
+            padding: 3rem;
             display: flex;
-            align-items: center;
             justify-content: center;
-            flex-direction: column;
+            margin-top: 5rem;
         }
 
-        .drag-area.active {
-            border: 2px solid #fff;
+        label {
+            position: absolute;
+            left: 3rem;
+            top: 0.9rem;
+            padding: 0 0.5rem;
+            color: white;
+            cursor: text;
+            transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
         }
 
-        .drag-area .icon {
-            font-size: 100px;
-            color: #fff;
+        .inputee:focus~label,
+        .inputee:not(:placeholder-shown).inputee:not(:focus)~label {
+            top: -0.5rem;
+            font-size: 0.9rem;
+            left: 1.3rem;
+            background-color: #060b23;
         }
 
-        .drag-area header {
-            font-size: 30px;
-            font-weight: 500;
-            color: #fff;
+        .date {
+            position: relative;
+            top: 45px;
         }
 
-        .drag-area span {
-            font-size: 25px;
-            font-weight: 500;
-            color: #fff;
-            margin: 10px 0 15px 0;
-        }
-
-        .drag-area button {
+        .inputee1 {
             padding: 10px 25px;
             font-size: 20px;
-            font-weight: 500;
             border: none;
             outline: none;
-            background: #fff;
-            color: #0d98ba;
+            background-color: #060b23;
+            color: white;
             border-radius: 5px;
             cursor: pointer;
+            position: absolute;
+            top: 5rem;
+            width: 17rem;
+            border: 2px solid #e1e5ee;
+            color-scheme: white;
+
         }
 
-        .drag-area input {
+        .inputee2 {
             padding: 10px 25px;
             font-size: 20px;
-            font-weight: 500;
             border: none;
             outline: none;
-            background: #fff;
-            color: #0d98ba;
+            background-color: #060b23;
+            color: white;
             border-radius: 5px;
+            position: absolute;
             cursor: pointer;
+            top: 10rem;
+            width: 17rem;
+            border: 2px solid #e1e5ee;
         }
 
-        .drag-area img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
+        .btn {
+            padding: 10px 25px;
+            font-size: 20px;
+            border: none;
+            outline: none;
+            background-color: #060b23;
+            color: white;
             border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+            top: 15rem;
+            width: 20rem;
+            border: 2px solid #e1e5ee;
+        }
+
+        .inputee:hover {
+
+            border-color: #adffff;
+        }
+
+        .inputee1:hover {
+
+            border-color: #adffff;
+        }
+
+        .inputee2:hover {
+
+            border-color: #adffff;
+        }
+
+        .btn:hover {
+
+            border-color: #adffff;
+        }
+
+        .icon {
+            font-size: 150px;
+            color: #fff;
+            position: relative;
+            bottom: 13rem;
+            display: block;
+            left: 81px;
+        }
+
+        .use {
+            color: white;
+            position: relative;
+            bottom: 134px;
+            left: 30px;
+        }
+
+        ::-webkit-calendar-picker-indicator {
+            filter: invert(1);
         }
     </style>
 </head>
 
 <body>
-    <div class="drag-area">
-        <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
-        <header>Drop file to upload</header>
-        <span>OR</span>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input name="file" type="file">
+    <div class="formee">
+        <form class="form" action="/upload" method="post" enctype="multipart/form-data">
+            <div><i class="fas fa-cloud-upload-alt icon"></i></div>
+            <i class="fa-solid fa-user use"></i>
+            <input class="inputee" name="name" type="text" id="email" autocomplete="off" placeholder=" ">
+            <label for="email" class="form__label"> Event name</label>
+
+            <input class="date inputee1" name="date" type="date">
+            <input class="inputee2" name="file" type="file">
             <button class="btn" type="submit">Upload</button>
+            <input type="file" hidden>
         </form>
-        <input type="file" hidden>
     </div>
+
+
     <div id="loader-wrapper">
         <div id="loader"></div>
 

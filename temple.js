@@ -51,10 +51,10 @@ app.get("/", function (req, res) {
     session = req.session;
     let date = new Date().getFullYear();
     if (session.userid) {
-        res.render('index', { islogin: false, date:date });
+        res.render('index', { islogin: false, date: date });
     }
     else {
-        res.render('index', { islogin: true, date:date });
+        res.render('index', { islogin: true, date: date });
     }
 });
 
@@ -117,7 +117,9 @@ app.get("/file", function (req, res) {
 require("dotenv")
     .config();
 
-const mongouri = 'mongodb+srv://admin-Mann:Test-123@cluster0.ghh2aew.mongodb.net/templledb';
+const mongouri = 'mongodb+srv://admin-Mann:Test-123@cluster0.ghh2aew.mongodb.net/templledb1';
+
+/************************* Uploading file to the server *****************************/
 try {
     mongoose.connect(mongouri, {
         useUnifiedTopology: true,
@@ -163,7 +165,34 @@ const upload = multer({
     storage
 });
 
+/************************* End of file uploading *****************************/
+
+/************************* Creating schema for users *****************************/
+
+const itemSchema = {
+    name_event: String,
+    date_event: String
+}
+
+const Item = mongoose.model("Item", itemSchema);
+
+/************************* Ending schema for users schema for users *****************************/
+
+// app.post("/upload", upload.single("file"), (req, res) => {
+//     res.status(200).sendFile(__dirname + "/file_uploaded_succ.html");
+// });
 app.post("/upload", upload.single("file"), (req, res) => {
+
+    const name = req.body.name;
+    const date = req.body.date;
+
+    const item1 = new Item({
+        name_event: name,
+        date_event: date
+    })
+
+    item1.save();
+
     res.status(200).sendFile(__dirname + "/file_uploaded_succ.html");
 });
 
@@ -191,22 +220,18 @@ var session;
 
 
 app.get('/pdfFiles', (req, res) => {
-    bucket.find().toArray((err, files) => {
-        // console.log(files.length);
-        // Check if files
-        // if (!files || files.length === 0) {
-        //     return res.status(404).json({
-        //         err: 'No files exist'
-        //     });
-        // }
-        // else {
+    bucket.find().toArray(async (err, files) => {
+
+        let arr = []
+        arr = await Item.find({});
+        // console.log(arr)
         session = req.session;
         if (session.userid) {
 
-            res.render('pdf', { files: files, islogin: true });
+            res.render('pdf', { files: files, islogin: true, founded: arr });
         }
         else {
-            res.render('pdf', { files: files, islogin: false });
+            res.render('pdf', { files: files, islogin: false, founded: arr });
         }
 
         // }
@@ -216,7 +241,16 @@ app.get('/pdfFiles', (req, res) => {
 ////////////  Delete function 
 app.post('/delete/:id', (req, res) => {
 
-    bucket.delete(mongoose.Types.ObjectId(req.params.id), (err, files) => {
+    const [post_id,file_id] = (req.params.id).split("_");
+    
+    Item.findByIdAndDelete(file_id,(err,docs)=>{
+        if (err) {
+            console.log(err);
+            // return res.status(404).json({err:err});
+        }    
+    })
+
+    bucket.delete(mongoose.Types.ObjectId(post_id), (err, files) => {
         if (!err) {
             console.log("Successfully deleted document");
             res.redirect('/pdfFiles');
@@ -237,7 +271,7 @@ app.post("/submit_pass", (req, res) => {
     if (((email_id == process.env.MAIL_ID) && (password == process.env.PASS))) {
         session = req.session;
         session.userid = email_id;
-        console.log(req.session);
+        // console.log(req.session);
         // console.log(Document);
         res.redirect("/");
     }

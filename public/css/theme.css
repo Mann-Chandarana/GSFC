@@ -1040,8 +1040,10 @@ textarea {
 
   /* background: url('https://madec.edu.au/wp-content/uploads/2022/02/938ba925943764901f2c2889ea835d42-scaled.jpg') no-repeat 0 0; */
   /* background: url('https://xtentertainment.com/wp-content/uploads/2015/03/Contact-us-Background.jpg') no-repeat 0 0; */
-  background-image: url(../img/bg.png);
-  background-color: #c8e8e9;
+  background-image: url(../bg-3.jpg);
+  background-repeat: no-repeat;
+  background-position: center center ;
+  /* background-color: #c8e8e9; */
   height: 100%;
   width: 100%;
 }

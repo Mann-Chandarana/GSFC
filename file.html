@@ -16,8 +16,9 @@
             <div class="title">
                 <h1>Drop file to upload</h1>
                 <form action="/upload" method="post" enctype="multipart/form-data">
+                    <input name="name" type="text" value="Enter event name">
+                    <input name="date" type="date">
                     <img class="img" src="upload.jpg" alt="">
-
                     <input class="choose" name="file" type="file">
                     <button class="btn" type="submit">Upload</button>
                 </form>
